@@ -66,7 +66,7 @@ const ReportsMangement = () => {
       <Box display={'flex'} justifyContent={'space-between'} flexDirection={{ xs: 'column', md: 'row' }}>
 
         {/* Left Side (Report Cards) */}
-        <Grid container spacing={2} my={2}>
+        <Grid container spacing={2} my={1}>
           {[{ id: 1, value: 'Report management' }, { id: 2, value: 'Merchant management' }, { id: 3, value: 'Post Report' }].map((res) => (
             <Grid item xs={12} sm={6} md={6} xl={2} lg={2} key={res.id}>
               <ReportCard heading={res.value} countL={'00000'} active={tab} titleL={'testL'} countR={'11111'} titleR={'testR'} onClick={customTab} />
@@ -78,7 +78,6 @@ const ReportsMangement = () => {
         <Grid item xs={12} md={4} lg={3} xl={2}>
           <CutomSearch />
         </Grid>
-
       </Box>
 
       <Box mt={4}>

@@ -10,6 +10,8 @@ import OrderManagement from "../screen/OrderManagement";
 import ReportsMangement from "../screen/ReportsManagement";
 import SettingScreen from "../screen/Settings";
 import ProfileScreen from "../screen/Profile";
+import { EditView } from "../components/MerchantMangement/EditView";
+import View from "../components/OrderMangement/View";
 
 
 const LoginLayout = lazy(() => import('../components/LoginAdminLayout'));
@@ -44,28 +46,51 @@ export const router = createBrowserRouter([
         element: <Suspense fallback={<CustomLoader text="Loading..." />}><HomeLayout /></Suspense>,
         children: [
             {
+               
                 index: true,
                 element: <Merchantmanagement />,
             },
             {
-                path:'postManagement',
+                path:'merchantEdit/:merchantId',
+                element: <EditView />,
+            },
+            {
+                path:'merchantView/:merchantId',
+                element: <EditView />,
+            },
+            {
+                path: 'postManagement',
                 element: <PostManagement />,
             },
             {
-                path:'orderManagement',
+                path:'postEdit/:postId',
+                element: <EditView />,
+            },
+            {
+                path:'postView/:postId',
+                element: <EditView />,
+            },
+            {
+                path: 'orderManagement',
                 element: <OrderManagement />,
             },
             {
-                path:'reportManagement',
-                element: <ReportsMangement/>,
+                path: 'order/:orderId',
+                element: <View />,
+            },
+        
+           
+            {
+                path: 'reportManagement',
+                element: <ReportsMangement />,
             },
             {
-                path:'settings',
-                element: <SettingScreen/>,
+                path: 'settings',
+                element: <SettingScreen />,
             },
             {
-                path:'profile',
-                element: <ProfileScreen/>,
+                path: 'profile',
+                element: <ProfileScreen />,
             },
         ],
     }

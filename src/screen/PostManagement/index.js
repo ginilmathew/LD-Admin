@@ -5,10 +5,11 @@ import DataTable from '../../components/common/CustomTable';
 import useModal from '../../hooks/ModalHook';
 import { EditView } from '../../components/PostMangement/EditView';
 import { ICONS } from '../../assets/ICONS';
+import { useNavigate } from 'react-router-dom';
 
 const PostManagement = () => {
-  const { modal, openModal, closeModal } = useModal();
-
+  // const { modal, openModal, closeModal } = useModal();
+ const navigate = useNavigate()
 
   const columns = [
     {
@@ -81,13 +82,13 @@ const PostManagement = () => {
         <Stack alignItems={'center'} gap={1} direction={'row'}>
           <Tooltip title={'view'}>
             <ICONS.RemoveRedEyeIcon.component
-              onClick={() => openView(row?.id)}
+              onClick={navigateToView}
               sx={ICONS.RemoveRedEyeIcon.sx}
             />
           </Tooltip>
           <Tooltip title={'edit'}>
             <ICONS.BorderColorIcon.component
-              onClick={() => openEdit(row?.id)}
+              onClick={navigateToEdit}
               sx={ICONS.BorderColorIcon.sx} />
           </Tooltip>
         </Stack>
@@ -107,31 +108,38 @@ const PostManagement = () => {
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
   ];
 
-  const openView = useCallback((id) => {
 
-    openModal('viewModal');
-  }, [modal]);
+  const navigateToEdit = useCallback((id) => {
+    navigate('/postEdit/irere', { state: 'Edit' })
+  }, [])
+  const navigateToView = useCallback((id) => {
+    navigate('/postView/irere', { state: 'View' })
+  }, [])
+
+  // const openView = useCallback((id) => {
+
+  //   openModal('viewModal');
+  // }, [modal]);
 
 
-  const closeView = useCallback(() => {
-    closeModal('viewModal');
-  }, [modal]);
+  // const closeView = useCallback(() => {
+  //   closeModal('viewModal');
+  // }, [modal]);
 
-  const openEdit = useCallback((id) => {
-    openModal('editModal');
-  }, [modal]);
+  // const openEdit = useCallback((id) => {
+  //   openModal('editModal');
+  // }, [modal]);
 
-  const closeEdit = useCallback(() => {
-    closeModal('editModal');
-  }, [modal]);
+  // const closeEdit = useCallback(() => {
+  //   closeModal('editModal');
+  // }, [modal]);
   return (
     <Box px={5} py={2}>
       <CustomHeading label={'Post Management'} />
       <Box mt={7}>
         <DataTable id={'id'} columns={columns} rows={rows} />
       </Box>
-      {modal.editModal && <EditView open={modal.editModal} close={closeEdit} label={'Edit Post'} hide={false} />}
-      {modal.viewModal && <EditView open={modal.viewModal} close={closeView} label={'View Post'} hide={false} />}
+      
     </Box>
   )
 }

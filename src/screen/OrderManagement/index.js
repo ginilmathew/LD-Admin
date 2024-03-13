@@ -5,11 +5,12 @@ import DataTable from '../../components/common/CustomTable';
 import useModal from '../../hooks/ModalHook';
 import View from '../../components/OrderMangement/View';
 import { ICONS } from '../../assets/ICONS';
+import { useNavigate } from 'react-router-dom';
 
 const OrderManagement = () => {
   const { modal, openModal, closeModal } = useModal();
 
-
+  const navigate = useNavigate()
   const columns = [
     {
       field: 'id',
@@ -81,7 +82,7 @@ const OrderManagement = () => {
         <Stack alignItems={'center'} gap={1} direction={'row'}>
           <Tooltip title={'view'}>
             <ICONS.RemoveRedEyeIcon.component
-              onClick={() => openView(row?.id)}
+              onClick={navigateToview}
               sx={ICONS.RemoveRedEyeIcon.sx}
             />
           </Tooltip>
@@ -114,6 +115,10 @@ const OrderManagement = () => {
   }, [modal]);
 
 
+  const navigateToview = useCallback(() => {
+    navigate('/order/:orderId')
+  }, [])
+
 
 
 
@@ -123,7 +128,7 @@ const OrderManagement = () => {
       <Box mt={7}>
         <DataTable id={'id'} columns={columns} rows={rows} />
       </Box>
-      {modal.viewModal && <View open={modal.viewModal} close={closeView} label={'View Order'} hide={true} />}
+      {/* {modal.viewModal && <View open={modal.viewModal} close={closeView} label={'View Order'} hide={true} />} */}
     </Box>
   )
 }

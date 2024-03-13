@@ -51,7 +51,7 @@ const ProfileScreen = () => {
         <Box px={5} py={2}>
             <CustomBackArrow back={true} label={'Profile'} />
 
-            <Grid container spacing={2}>
+            <Grid container spacing={2} px={10}>
                 <Grid item md={3} sm={12} xs={12} xl={3} lg={3}>
                     <Box display={'flex'} justifyContent={'center'} alignItems={'center'} gap={2} flexDirection={'column'}>
                         <CustomProfileImageUploader

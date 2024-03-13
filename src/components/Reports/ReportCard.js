@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from '@mui/material'
+import { Box, Card, Paper, Typography } from '@mui/material'
 import React, { memo, useCallback } from 'react'
 import { ICONS } from '../../assets/ICONS'
 import { COLOURS } from '../../assets/COLORS'
@@ -9,7 +9,7 @@ const ReportCard = ({ heading, titleL, countL, titleR, countR, onClick, active }
     }
 
     return (
-        <Paper elevation={1} onClick={onPress} sx={{ padding: 1, cursor: 'pointer' }} >
+        <Card  elevation={1} onClick={onPress} sx={{ padding: 1, cursor: 'pointer' }} >
             <Box display={'flex'} justifyContent={'space-between'} textAlign={'center'}>
                 <Typography sx={{ fontSize: 14, fontFamily: 'Outfit-Bold' }}>{heading}</Typography>
                 <ICONS.CheckCircleIcon.component sx={{ fontSize: 16, color: active === heading ? COLOURS.switchEnablebutton : COLOURS.switchDisableButton }} />
@@ -24,7 +24,7 @@ const ReportCard = ({ heading, titleL, countL, titleR, countR, onClick, active }
                     <Typography sx={{ fontSize: 18, fontFamily: 'Outfit-Medium', color: COLOURS.textColor }}>{countR}</Typography>
                 </Box>
             </Box>
-        </Paper>
+        </Card>
     )
 }
 

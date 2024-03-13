@@ -6,18 +6,21 @@ import useModal from '../../hooks/ModalHook';
 import { ICONS } from '../../assets/ICONS';
 import { EditView } from '../../components/MerchantMangement/EditView';
 import CustomSwitch from '../../components/common/CustomSwitch';
+import { useNavigate } from 'react-router-dom';
 
 const Merchantmanagement = () => {
   const { modal, openModal, closeModal } = useModal();
 
+  const navigate = useNavigate()
+
   const ChangeStatus = (checked, row) => {
     let status = checked === true ? 1 : 0;
     let val = {
-        id: row,
-        status: status
+      id: row,
+      status: status
     }
 
-}
+  }
 
 
   const columns = [
@@ -76,12 +79,12 @@ const Merchantmanagement = () => {
       align: 'center',
       renderCell: ({ row }) => (
         <Stack alignItems={'center'} justifyContent={'center'} gap={1} direction={'row'}>
-            <CustomSwitch 
+          <CustomSwitch
             checked={true}
-                onClick={(e) => ChangeStatus(e.target.checked, row?.id)}
-            />
+            onClick={(e) => ChangeStatus(e.target.checked, row?.id)}
+          />
         </Stack>
-    ),
+      ),
     },
     {
 
@@ -99,14 +102,14 @@ const Merchantmanagement = () => {
         <Stack alignItems={'center'} gap={1} direction={'row'}>
           <Tooltip title={'view'}>
             <ICONS.RemoveRedEyeIcon.component
-              onClick={() => openView(row?.id)}
+              onClick={navigateToView}
               sx={ICONS.RemoveRedEyeIcon.sx}
             />
           </Tooltip>
 
           <Tooltip title={'edit'}>
             <ICONS.BorderColorIcon.component
-              onClick={() => openEdit(row?.id)}
+              onClick={() => navigateToEdit(row?.id)}
               sx={ICONS.BorderColorIcon.sx} />
           </Tooltip>
 
@@ -134,17 +137,14 @@ const Merchantmanagement = () => {
   }, [modal]);
 
 
-  const closeView = useCallback(() => {
-    closeModal('viewModal');
-  }, [modal]);
+  const navigateToEdit = useCallback((id) => {
+    navigate('/merchantEdit/irere', { state: 'Edit' })
+  }, [])
+  const navigateToView = useCallback((id) => {
+    navigate('/merchantView/irere', { state: 'View' })
+  }, [])
 
-  const openEdit = useCallback((id) => {
-    openModal('editModal');
-  }, [modal]);
 
-  const closeEdit = useCallback(() => {
-    closeModal('editModal');
-  }, [modal]);
 
   return (
     <Box px={5} py={2}>
@@ -152,8 +152,8 @@ const Merchantmanagement = () => {
       <Box mt={7}>
         <DataTable id={'id'} columns={columns} rows={rows} />
       </Box>
-      {modal.editModal && <EditView open={modal.editModal} close={closeEdit} label={'Edit Merchant'} hide={false} />}
-      {modal.viewModal && <EditView open={modal.viewModal} close={closeView} label={'View Merchant'} hide={false} />}
+      {/* {modal.editModal && <EditView open={modal.editModal} close={closeEdit} label={'Edit Merchant'} hide={false} />}
+      {modal.viewModal && <EditView open={modal.viewModal} close={closeView} label={'View Merchant'} hide={false} />} */}
     </Box>
   )
 }

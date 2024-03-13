@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Controller } from "react-hook-form";
 import { FormGroup, Typography, Stack, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -13,20 +13,7 @@ const CustomTextArea = ({
   fieldLabel,
   placeholder,
   error,
-  type,
-  maxrow,
-  rows,
-  height,
-  multiline,
-  background,
-  boxshadow,
-  readOnly,
-  buttonEnable,
-  onClick,
-  buttonText,
-  changeValue,
-  defaultValue,
-  view
+
 }) => {
 
   const [show, setShow] = useState(false)
@@ -66,7 +53,7 @@ const CustomTextArea = ({
               rows="4"
               onChange={onChange}
               value={value}
-              style={{border:'none',background:COLOURS.table,paddingLeft:1,borderRadius:5}}
+              style={{border:'none',background:COLOURS.table,paddingLeft:1,borderRadius:5,paddingTop:1}}
 
             />
           )}
@@ -90,4 +77,4 @@ const CustomTextArea = ({
   );
 };
 
-export default CustomTextArea;
+export default memo(CustomTextArea);
