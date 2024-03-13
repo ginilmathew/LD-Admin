@@ -31,11 +31,20 @@ const CustomTextArea = ({
 
   const [show, setShow] = useState(false)
 
+  const styles = theme => ({
+    field: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      height: '30px !important'
+    },
+  });
+
+
   return (
     <>
       <FormGroup>
         <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-          <Typography fontFamily={ 'Raleway, sans-serif' }  fontWeight={'700'} px={'3px'} mb={'2px'}
+          <Typography fontFamily={'Raleway, sans-serif'} fontWeight={'700'} px={'3px'} mb={'2px'}
             sx={{
               fontSize: {
                 lg: 16,
@@ -53,28 +62,12 @@ const CustomTextArea = ({
           name={fieldName}
           control={control}
           render={({ field: { value, onChange, onBlur } }) => (
-            <TextareaAutosize
-            style={{
-              borderRadius: "5px",
-              backgroundColor: COLOURS.table, 
-              padding: 2,
-              border: 'none'
-            }}
-              minRows={6}
-              readOnly={false}
-              defaultValue={defaultValue}
+            <textarea
+              rows="4"
+              onChange={onChange}
               value={value}
-              onChange={changeValue ? changeValue : onChange}
-              onBlur={onBlur}
-              aria-invalid={error ? "true" : "false"}
-              className="form-control"
-              placeholder={placeholder}
-              id="exampleInputEmail1"
-              type={type ? show ? 'text' : type : "text"}
-              maxLength={maxrow}
-              maxRows={maxrow}
-              multiline={multiline}
-            
+              style={{border:'none',background:COLOURS.table,paddingLeft:1,borderRadius:5}}
+
             />
           )}
         />
