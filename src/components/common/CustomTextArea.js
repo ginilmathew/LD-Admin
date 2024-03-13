@@ -1,11 +1,6 @@
 import React, { memo, useState } from "react";
 import { Controller } from "react-hook-form";
 import { FormGroup, Typography, Stack, Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import InputAdornment from '@mui/material/InputAdornment';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { TextareaAutosize } from '@mui/base';
 import { COLOURS } from "../../assets/COLORS";
 const CustomTextArea = ({
   fieldName,
@@ -16,15 +11,6 @@ const CustomTextArea = ({
 
 }) => {
 
-  const [show, setShow] = useState(false)
-
-  const styles = theme => ({
-    field: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      height: '30px !important'
-    },
-  });
 
 
   return (
