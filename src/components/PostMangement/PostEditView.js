@@ -16,7 +16,7 @@ import CustomBackArrow from '../common/CustomBackArrow';
 import { useLocation } from 'react-router-dom';
 
 
-export const EditView = ({ close, open, label }) => {
+export const PostEditView = ({ close, open, label }) => {
 
     const location = useLocation();
     const { state } = location;
@@ -62,7 +62,7 @@ export const EditView = ({ close, open, label }) => {
 
     return (
         <Box px={2} py={2}>
-            <CustomBackArrow label={`${state} Merchant`} />
+            <CustomBackArrow label={`${state} Post`} />
             <Box px={5}>
 
                 <Grid container spacing={2} my={2} >

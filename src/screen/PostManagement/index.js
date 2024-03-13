@@ -2,8 +2,6 @@ import { Box, Stack, Tooltip } from '@mui/material'
 import React, { useCallback } from 'react'
 import CustomHeading from '../../components/common/CustomHeading'
 import DataTable from '../../components/common/CustomTable';
-import useModal from '../../hooks/ModalHook';
-import { EditView } from '../../components/PostMangement/EditView';
 import { ICONS } from '../../assets/ICONS';
 import { useNavigate } from 'react-router-dom';
 

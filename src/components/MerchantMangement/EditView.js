@@ -57,7 +57,7 @@ export const EditView = () => {
 
     return (
         <Box px={2} py={2}>
-            <CustomBackArrow label={`${state} Post`} />
+            <CustomBackArrow label={`${state} Merchant`} />
             <Box px={5}>
                 <CustomTitle label={'Personal Details'} />
                 <Grid container spacing={2} my={2} >

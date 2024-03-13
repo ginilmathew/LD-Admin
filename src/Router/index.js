@@ -12,6 +12,7 @@ import SettingScreen from "../screen/Settings";
 import ProfileScreen from "../screen/Profile";
 import { EditView } from "../components/MerchantMangement/EditView";
 import View from "../components/OrderMangement/View";
+import { PostEditView } from "../components/PostMangement/PostEditView";
 
 
 const LoginLayout = lazy(() => import('../components/LoginAdminLayout'));
@@ -64,11 +65,11 @@ export const router = createBrowserRouter([
             },
             {
                 path:'postEdit/:postId',
-                element: <EditView />,
+                element: <PostEditView />,
             },
             {
                 path:'postView/:postId',
-                element: <EditView />,
+                element: <PostEditView />,
             },
             {
                 path: 'orderManagement',
@@ -78,8 +79,6 @@ export const router = createBrowserRouter([
                 path: 'order/:orderId',
                 element: <View />,
             },
-        
-           
             {
                 path: 'reportManagement',
                 element: <ReportsMangement />,
