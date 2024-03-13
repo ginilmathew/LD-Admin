@@ -157,7 +157,7 @@ export const EditView = ({ close, open, label }) => {
                                 fieldLabel="Company Representative"
                             />
                         </Grid>
-                        <Grid item xl={2.4} lg={2.4} md={1} sm={2} xs={12}></Grid>
+                        <Grid item xl={4} lg={4} md={1} sm={2} xs={12}></Grid>
                         <Grid item xl={2.4} lg={2.4} md={4} sm={3} xs={12}>
                             <CustomImageUploader
                                 ICON={""}
