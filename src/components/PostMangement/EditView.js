@@ -142,7 +142,7 @@ export const EditView = ({ close, open, label }) => {
                                 placeholder={``}
                                 fieldLabel={"Post Image"}
                                 control={control}
-                                height={{ xl: 180, lg: 180, md: 170, sm: 160, xs: 160 }}
+                                height={{ xl: 160, lg: 150, md: 150, sm: 150, xs: 140 }}
                                 max={5}
                                 onChangeValue={ImageUploderCompany}
                                 preview={imagefileCmpny}
@@ -163,7 +163,7 @@ export const EditView = ({ close, open, label }) => {
                                 placeholder={``}
                                 fieldLabel={"Prize Image"}
                                 control={control}
-                                height={{ xl: 180, lg: 180, md: 170, sm: 160, xs: 160 }}
+                                height={{ xl: 160, lg: 150, md: 150, sm: 150, xs: 140 }}
                                 max={5}
                                 onChangeValue={ImageUploderCover}
                                 preview={imagefileCover}

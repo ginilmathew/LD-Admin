@@ -157,8 +157,8 @@ export const EditView = ({ close, open, label }) => {
                                 fieldLabel="Company Representative"
                             />
                         </Grid>
-                        <Grid xs={4}></Grid>
-                        <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
+                        <Grid item xl={2.4} lg={2.4} md={1} sm={2} xs={12}></Grid>
+                        <Grid item xl={2.4} lg={2.4} md={4} sm={3} xs={12}>
                             <CustomImageUploader
                                 ICON={""}
                                 hide={false}
@@ -168,7 +168,7 @@ export const EditView = ({ close, open, label }) => {
                                 placeholder={``}
                                 fieldLabel={"Company Logo"}
                                 control={control}
-                                height={{ xl: 180, lg: 180, md: 170, sm: 160, xs: 160 }}
+                                height={{ xl: 160, lg: 150, md: 150, sm: 150, xs: 140 }}
                                 max={5}
                                 onChangeValue={ImageUploderCompany}
                                 preview={imagefileCmpny}
@@ -181,7 +181,7 @@ export const EditView = ({ close, open, label }) => {
 
                         </Grid>
 
-                        <Grid item xl={4.8} lg={4.8} md={6} sm={8} xs={12}>
+                        <Grid item xl={4.8} lg={4.8} md={4} sm={6} xs={12}>
                             <CustomImageUploader
                                 ICON={""}
                                 hide={false}
@@ -191,7 +191,7 @@ export const EditView = ({ close, open, label }) => {
                                 placeholder={``}
                                 fieldLabel={"Cover Picture"}
                                 control={control}
-                                height={{ xl: 180, lg: 180, md: 170, sm: 160, xs: 160 }}
+                                height={{ xl: 160, lg: 150, md: 150, sm: 150, xs: 140 }}
                                 max={5}
                                 onChangeValue={ImageUploderCover}
                                 preview={imagefileCover}
