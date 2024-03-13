@@ -53,7 +53,7 @@ const CustomImageUploader = ({
           control={ control }
           render={ ({ field: { onChange, onBlur, value } }) =>
             <Box sx={ { height: height ? height : 150, border: '1px solid #f5f5f5', width: width ? width : "50%", position: 'relative', fontFamily: `Outfit-Medium`,borderRadius:10 } } >
-              <Avatar src={ viewImage ? viewImage : preview ? URL?.createObjectURL(preview) : '' } style={ { width: '100%', height: '100%' ,borderRadius:5} } variant="square"></Avatar>
+              <Avatar src={ viewImage ? viewImage : preview ? URL?.createObjectURL(preview) : '' } style={ { width: '100%', height: '100%' ,borderRadius:8} } variant="square"></Avatar>
 
               <label htmlFor={ myid } >
                 <Input
