@@ -97,8 +97,8 @@ export const EditView = ({ close, open, label }) => {
                                 fieldLabel="Post Type"
                             />
                         </Grid>
-                        <Grid item xl={2} lg={2} md={3} sm={4} xs={12}></Grid>
-                        <Grid item xl={2} lg={2} md={3} sm={4} xs={12}></Grid>
+                        <Grid item xl={2} lg={2} md={1} sm={4} xs={12}></Grid>
+                        <Grid item xl={2} lg={2} md={1} sm={4} xs={12}></Grid>
                         <Grid item xl={2} lg={2} md={3} sm={4} xs={12}>
                             <CustomTextArea
                                 readOnly={true}
@@ -108,7 +108,7 @@ export const EditView = ({ close, open, label }) => {
                                 multiline={true}
                                 height={90}
                                 row={10}
-                                fieldLabel="Post Type"
+                                fieldLabel="Post Title"
                             />
                         </Grid>
                         <Grid item xl={10} lg={10} md={3} sm={4} xs={12}>
