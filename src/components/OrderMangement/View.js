@@ -56,7 +56,6 @@ const View = ({ close, open, label }) => {
     return (
         <Box px={2} py={2}>
             <CustomBackArrow label={'View Order'}  />
-
             <Box px={5}>
                 <Grid container spacing={2} my={2}>
                     <Grid item xl={2} lg={2} md={3} sm={4} xs={12}>

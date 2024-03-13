@@ -50,7 +50,7 @@ const CustomTextArea = ({
           control={control}
           render={({ field: { value, onChange, onBlur } }) => (
             <textarea
-              rows="4"
+              rows="6"
               onChange={onChange}
               value={value}
               style={{border:'none',background:COLOURS.table,paddingLeft:1,borderRadius:5,paddingTop:1}}
