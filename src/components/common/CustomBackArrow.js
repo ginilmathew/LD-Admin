@@ -4,16 +4,16 @@ import { Box, Typography } from '@mui/material'
 
 import { COLOURS } from '../../assets/COLORS'
 
-const CustomBackArrow = ({ label,close,back }) => {
+const CustomBackArrow = ({ label, close, back, MT }) => {
 
 
 
     const NavigateToClose = useCallback(() => {
-              close()
+        close()
     }, [])
     return (
-        <Box sx={{ display: 'flex',  alignItems: 'center', gap: 2, cursor: 'pointer' }} onClick={!back ? NavigateToClose : null}>
-            {!back && <ICONS.arrowBack.component sx={ICONS.arrowBack.sx}/> }
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, cursor: 'pointer', mt: MT ? MT : 8 }} onClick={!back ? NavigateToClose : null}>
+            {!back && <ICONS.arrowBack.component sx={ICONS.arrowBack.sx} />}
             <Typography sx={{ fontSize: 26, fontFamily: 'Outfit-Bold', color: COLOURS.secondary }}>{label}</Typography>
         </Box>
     )

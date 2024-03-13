@@ -54,7 +54,7 @@ const CustomModal = ({ children, open, close, label, width }) => {
         >
 
             <Box display={'flex'} height={40} px={2}  py={2} alignItems={'center'}>
-                <CustomBackArrow close={close} label={label} />
+                <CustomBackArrow close={close} label={label} MT={.1} />
             </Box>
             <DialogContent>
                 {children}

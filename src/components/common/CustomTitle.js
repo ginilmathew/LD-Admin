@@ -4,7 +4,7 @@ import { Grid, Typography } from '@mui/material'
 
 const CustomTitle = ({ label }) => {
     return (
-        <Grid py={2} container spacing={2} justifyContent="space-between" alignItems="center">
+        <Grid py={2} container spacing={2} justifyContent="space-between" alignItems="center" >
 
             <Grid item xs={12} xl={10} lg={10} md={10} sm={12} >
                 <Typography sx={{

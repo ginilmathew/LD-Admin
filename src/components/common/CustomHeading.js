@@ -5,7 +5,7 @@ import CutomSearch from './CustomSearch';
 
 const CustomHeading = ({ label,isEnable }) => {
     return (
-        <Grid container spacing={2} justifyContent="space-between" alignItems="center">
+        <Grid container mt={8} spacing={2} justifyContent="space-between" alignItems="center">
 
             <Grid item xs={12} xl={10} lg={10} md={10} sm={12} >
                 <Typography sx={{

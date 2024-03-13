@@ -50,7 +50,7 @@ const Header = () => {
   }, [navigate]);
 
   return (
-    <Box sx={{ height: 80, width: '100%', background: COLOURS.primary }}>
+    <Box sx={{ height: 80, width: '100%', background: COLOURS.primary,position:'fixed',zIndex:100 }}>
       <Grid container justifyContent="space-between" alignItems="center" sx={{ px: 5, height: '100%' }}>
         {/* Left side (20%) */}
         <Grid item xs={2}>
