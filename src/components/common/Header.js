@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -16,12 +16,14 @@ import { menues } from './menus';
 import { COLOURS } from '../../assets/COLORS';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import UserContext from '../../Context/user';
 
 const Header = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { setUser } = useContext(UserContext);
 
   const handleIconButtonClick = () => {
     setIsDrawerOpen(true);
@@ -45,6 +47,8 @@ const Header = () => {
   }, [navigate]);
 
   const Logout = useCallback(() => {
+    localStorage.clear(); 
+    setUser(null)
     navigate('/login', { replace: true });
     setAnchorEl(null);
   }, [navigate]);

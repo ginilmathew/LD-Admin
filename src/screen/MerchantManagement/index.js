@@ -1,86 +1,153 @@
 import { Box, Stack, Tooltip } from '@mui/material'
-import React, { useCallback } from 'react'
+import React, { startTransition, useCallback, useEffect, useState } from 'react'
 import CustomHeading from '../../components/common/CustomHeading'
 import DataTable from '../../components/common/CustomTable';
-import useModal from '../../hooks/ModalHook';
 import { ICONS } from '../../assets/ICONS';
-import { EditView } from '../../components/MerchantMangement/EditView';
 import CustomSwitch from '../../components/common/CustomSwitch';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getMerchantList, postMerchantSatus } from '../../api/Merchant';
+import moment from 'moment';
+import { useSnackbar } from '../../hooks/SnackBarHook';
+import CustomLoader from '../../components/common/CustomLoader';
+import CustomBackDrop from '../../components/common/CustomBackDrop';
 
 const Merchantmanagement = () => {
-  const { modal, openModal, closeModal } = useModal();
 
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
+  const showSnackbar = useSnackbar();
+  const queryClient = useQueryClient();
+  const [List, setlist] = useState([]);
+
+  const { data, isError, isLoading, isFetched, refetch } = useQuery({ queryKey: ['merchantList'], queryFn: getMerchantList });
+
+
+
+
+  useEffect(() => {
+    if (data?.data?.data) {
+
+      setlist(data?.data?.data)
+    }
+  }, [data?.data?.data])
+
+
+  const { mutate: mutateStatus } = useMutation({
+    mutationFn: postMerchantSatus,
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({ queryKey: ["merchantList"] })
+      showSnackbar('Status changed successfully!', 'success');
+    },
+    onError: (error, variables, context) => {
+      showSnackbar(error?.message, 'error');
+    },
+
+  })
+
+  const coloredOrderStatusCell = (params) => {
+    const orderStatus = params?.row?.approval_status;
+    let color = 'black'; // Default color
+
+    if (orderStatus === 'approved') {
+      color = '#16af67';
+    } else if (orderStatus === 'processing') {
+      color = '#feb236';
+    } else if (orderStatus === 'shipped') {
+      color = 'blue';
+    } else if (orderStatus === 'completed') {
+      color = 'green';
+    } else if (orderStatus === 'rejected') {
+      color = '#af1616';
+    } else if (orderStatus === 'pending') {
+      color = "#af7c16"
+    }
+    return <div style={{ color }}>{orderStatus}</div>;
+  };
+
 
   const ChangeStatus = (checked, row) => {
-    let status = checked === true ? 1 : 0;
+
     let val = {
       id: row,
-      status: status
+      status: checked === true ? 'active' : 'inactive'
     }
+    mutateStatus(val)
 
   }
+
+
 
 
   const columns = [
     {
       field: 'id',
       headerName: 'Merchant ID',
-      flex: 1,
+      width: 200,
       headerAlign: 'center',
       align: 'center',
     },
     {
-      field: 'firstName',
+      field: 'first_name',
       headerName: 'First name',
-      flex: 1,
+      width: 200,
       headerAlign: 'center',
       align: 'center',
     },
     {
-      field: 'lastName',
+      field: 'Created Date',
       headerName: 'Created Date',
-      flex: 1,
+      width: 200,
+      valueGetter: (params) => (moment(params.row.created_at).format('DD/MM/YYYY')),
       headerAlign: 'center',
       align: 'center',
+
     },
     {
-      field: 'age',
+      field: 'user_name',
       headerName: 'Username',
       type: 'number',
-      flex: 1,
+      width: 200,
       headerAlign: 'center',
       align: 'center',
+
     },
     {
-      field: 'fullName',
+      field: 'email',
       headerName: 'Email Address',
-      flex: 1,
+      width: 250,
       headerAlign: 'center',
       align: 'center',
-      valueGetter: (params) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+
     },
     {
-      field: 'agesdf',
+      field: 'mobile',
       headerName: 'Mobile Number',
       type: 'number',
-      flex: 1,
+      width: 200,
       headerAlign: 'center',
       align: 'center',
+    },
+    {
+      field: 'approval status',
+      headerName: 'Approval Status',
+      type: 'number',
+      width: 200,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) => coloredOrderStatusCell(params),
     },
     {
       field: 'agesdfsdsd',
-      headerName: 'Approval Status',
+      headerName: 'Status',
       type: 'number',
-      flex: 1,
+      width: 250,
       headerAlign: 'center',
       align: 'center',
       renderCell: ({ row }) => (
         <Stack alignItems={'center'} justifyContent={'center'} gap={1} direction={'row'}>
           <CustomSwitch
-            checked={true}
+            checked={row?.status === 'active' ? true : false}
             onClick={(e) => ChangeStatus(e.target.checked, row?.id)}
           />
         </Stack>
@@ -102,7 +169,7 @@ const Merchantmanagement = () => {
         <Stack alignItems={'center'} gap={1} direction={'row'}>
           <Tooltip title={'view'}>
             <ICONS.RemoveRedEyeIcon.component
-              onClick={navigateToView}
+              onClick={() => navigateToView(row?.id)}
               sx={ICONS.RemoveRedEyeIcon.sx}
             />
           </Tooltip>
@@ -119,41 +186,57 @@ const Merchantmanagement = () => {
     }
   ];
 
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 14 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 31 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 11 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
 
-  const openView = useCallback((id) => {
-
-    openModal('viewModal');
-  }, [modal]);
 
 
   const navigateToEdit = useCallback((id) => {
-    navigate('/merchantEdit/irere', { state: 'Edit' })
-  }, [])
+    console.log({ id })
+    navigate(`/merchantEdit/${id}`, { state: 'Edit' })
+  }, [navigate]);
+
   const navigateToView = useCallback((id) => {
-    navigate('/merchantView/irere', { state: 'View' })
-  }, [])
+    navigate(`/merchantView/${id}`, { state: 'View' })
+  }, [navigate]);
+
+  const searchItem = useCallback((value) => {
+    console.log({ value })
+    let result = data?.data?.data?.filter((com) => com?.id.toString().toLowerCase().includes(value.toLowerCase())
+      || com?.first_name.toString().toLowerCase().includes(value.toLowerCase()) ||
+      com?.email.toString().toLowerCase().includes(value.toLowerCase()) || com?.mobile.toString().toLowerCase().includes(value.toLowerCase())
+
+    )
+    startTransition(() => {
+      setlist(result)
+    })
+  }, [List])
+
+
+
+
+  if (isLoading) {
+    return (
+      <>
+        <Box px={5} py={2}>
+          <CustomHeading label={'Merchant Management'} setState={null} />
+          <Box mt={7} >
+            <DataTable id={'id'} columns={columns} rows={[]} />
+          </Box>
+
+        </Box>
+        <CustomBackDrop loading={isLoading} />
+      </>
+    )
+  }
 
 
 
   return (
     <Box px={5} py={2}>
-      <CustomHeading label={'Merchant Management'} />
-      <Box mt={7}>
-        <DataTable id={'id'} columns={columns} rows={rows} />
+      <CustomHeading label={'Merchant Management'} setState={searchItem} />
+      <Box mt={7} >
+        <DataTable id={'id'} columns={columns} rows={List} />
       </Box>
-      {/* {modal.editModal && <EditView open={modal.editModal} close={closeEdit} label={'Edit Merchant'} hide={false} />}
-      {modal.viewModal && <EditView open={modal.viewModal} close={closeView} label={'View Merchant'} hide={false} />} */}
+
     </Box>
   )
 }

@@ -1,13 +1,53 @@
 import { Box, Stack, Tooltip } from '@mui/material'
-import React, { useCallback } from 'react'
+import React, { startTransition, useCallback, useEffect, useState } from 'react'
 import CustomHeading from '../../components/common/CustomHeading'
 import DataTable from '../../components/common/CustomTable';
 import { ICONS } from '../../assets/ICONS';
 import { useNavigate } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getPostList } from '../../api/post';
+import { useSnackbar } from '../../hooks/SnackBarHook';
+import moment from 'moment';
 
 const PostManagement = () => {
-  // const { modal, openModal, closeModal } = useModal();
- const navigate = useNavigate()
+  const navigate = useNavigate()
+
+  const [List, setlist] = useState([]);
+
+  const { data, isError, isLoading, isFetched, refetch } = useQuery({ queryKey: ['postList'], queryFn: getPostList });
+
+
+
+  useEffect(() => {
+    if (data?.data?.data) {
+
+      setlist(data?.data?.data)
+    }
+  }, [data?.data?.data])
+
+console.log({List})
+
+
+const coloredOrderStatusCell = (params) => {
+  const orderStatus = params?.row?.status;
+  let color = 'black'; // Default color
+
+  if (orderStatus === 'approved') {
+    color = '#16af67';
+  } else if (orderStatus === 'processing') {
+    color = '#feb236';
+  } else if (orderStatus === 'shipped') {
+    color = 'blue';
+  } else if (orderStatus === 'completed') {
+    color = 'green';
+  } else if (orderStatus === 'rejected') {
+    color = '#af1616';
+  } else if (orderStatus === 'pending') {
+    color = "#af7c16"
+  }
+  return <div style={{ color }}>{orderStatus}</div>;
+};
+
 
   const columns = [
     {
@@ -24,6 +64,7 @@ const PostManagement = () => {
       flex: 1,
       headerAlign: 'center',
       align: 'center',
+      valueGetter: (params) => (moment(params.row.created_date).format('DD/MM/YYYY')),
     },
     {
       field: 'age',
@@ -34,16 +75,15 @@ const PostManagement = () => {
       align: 'center',
     },
     {
-      field: 'fullName',
+      field: 'title',
       headerName: 'Post Title',
       flex: 1,
       headerAlign: 'center',
       align: 'center',
-      valueGetter: (params) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+     
     },
     {
-      field: 'agesdf',
+      field: 'total_participants',
       headerName: 'Total Participants',
       type: 'number',
       flex: 1,
@@ -57,6 +97,7 @@ const PostManagement = () => {
       flex: 1,
       headerAlign: 'center',
       align: 'center',
+      valueGetter: (params) => (moment(params.row.deadline).format('DD/MM/YYYY  hh:mm A')),
     },
     {
       field: 'agesdsf',
@@ -65,6 +106,7 @@ const PostManagement = () => {
       flex: 1,
       headerAlign: 'center',
       align: 'center',
+      renderCell: (params) => coloredOrderStatusCell(params),
     },
     
     {
@@ -80,13 +122,13 @@ const PostManagement = () => {
         <Stack alignItems={'center'} gap={1} direction={'row'}>
           <Tooltip title={'view'}>
             <ICONS.RemoveRedEyeIcon.component
-              onClick={navigateToView}
+              onClick={()=>navigateToView(row?.id)}
               sx={ICONS.RemoveRedEyeIcon.sx}
             />
           </Tooltip>
           <Tooltip title={'edit'}>
             <ICONS.BorderColorIcon.component
-              onClick={navigateToEdit}
+              onClick={()=>navigateToEdit(row?.id)}
               sx={ICONS.BorderColorIcon.sx} />
           </Tooltip>
         </Stack>
@@ -108,34 +150,29 @@ const PostManagement = () => {
 
 
   const navigateToEdit = useCallback((id) => {
-    navigate('/postEdit/irere', { state: 'Edit' })
-  }, [])
+    navigate(`/postEdit/${id}`, { state: 'Edit' })
+  }, [navigate]);
+
   const navigateToView = useCallback((id) => {
-    navigate('/postView/irere', { state: 'View' })
-  }, [])
+    navigate(`/postView/${id}`, { state: 'View' })
+  }, [navigate]);
 
-  // const openView = useCallback((id) => {
+  const searchItem = useCallback((value) => {
+    console.log({ value })
+    let result = data?.data?.data?.filter((com) => com?.id.toString().toLowerCase().includes(value.toLowerCase())
+      || com?.total_participants.toString().toLowerCase().includes(value.toLowerCase())
 
-  //   openModal('viewModal');
-  // }, [modal]);
+    )
+    startTransition(() => {
+      setlist(result)
+    })
+  }, [List])
 
-
-  // const closeView = useCallback(() => {
-  //   closeModal('viewModal');
-  // }, [modal]);
-
-  // const openEdit = useCallback((id) => {
-  //   openModal('editModal');
-  // }, [modal]);
-
-  // const closeEdit = useCallback(() => {
-  //   closeModal('editModal');
-  // }, [modal]);
   return (
     <Box px={5} py={2}>
-      <CustomHeading label={'Post Management'} />
+      <CustomHeading label={'Post Management'} setState={searchItem}/>
       <Box mt={7}>
-        <DataTable id={'id'} columns={columns} rows={rows} />
+        <DataTable id={'id'} columns={columns} rows={List} />
       </Box>
       
     </Box>

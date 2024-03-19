@@ -6,7 +6,7 @@ import { COLOURS } from '../../assets/COLORS';
 const DataTable = ({ columns, rows, height, border, borderGrid, id, bg, rowheight }) => {
   return (
 
-    <Box sx={ { height: '100%',minwidth:'100%' } }>
+    <Box sx={ { minHeight: '100%',minwidth:'100%' } }>
       <DataGrid
         sx={ {
             background: COLOURS.table,
@@ -15,7 +15,8 @@ const DataTable = ({ columns, rows, height, border, borderGrid, id, bg, rowheigh
             fontFamily: 'Raleway, sans-serif',
             fontWeight: 'bold',
             letterSpacing: '.5px',
-            border:'none'
+            border:'none',
+            minHeight:'75vh'
         }}
 
         initialState={{

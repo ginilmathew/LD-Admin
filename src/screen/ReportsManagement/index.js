@@ -57,7 +57,8 @@ const ReportsMangement = () => {
 
   const customTab = useCallback((res) => {
     setTab(res)
-  }, [tab])
+  }, [tab]);
+  
   return (
     <Box px={5} py={2}>
       <CustomHeading label={'Report Management'} isEnable={true} />

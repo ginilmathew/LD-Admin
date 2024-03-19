@@ -3,7 +3,7 @@ import Login from "../screen/auth/Login";
 import ForgetPassword from "../screen/auth/ForgetPassword";
 import Merchantmanagement from "../screen/MerchantManagement";
 import NotFound from "../screen/NotFound";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import CustomLoader from "../components/common/CustomLoader";
 import PostManagement from "../screen/PostManagement";
 import OrderManagement from "../screen/OrderManagement";
@@ -13,10 +13,12 @@ import ProfileScreen from "../screen/Profile";
 import { EditView } from "../components/MerchantMangement/EditView";
 import View from "../components/OrderMangement/View";
 import { PostEditView } from "../components/PostMangement/PostEditView";
+import ProtectedRouter from "./protectedRouter";
 
 
 const LoginLayout = lazy(() => import('../components/LoginAdminLayout'));
 const HomeLayout = lazy(() => import('../components/HomeAdminLayout'));
+
 
 export const router = createBrowserRouter([
     {
@@ -44,19 +46,19 @@ export const router = createBrowserRouter([
     {
         errorElement: <NotFound />,
         path: "/",
-        element: <Suspense fallback={<CustomLoader text="Loading..." />}><HomeLayout /></Suspense>,
+        element: <Suspense fallback={<CustomLoader text="Loading..." />}><ProtectedRouter><HomeLayout /></ProtectedRouter></Suspense>,
         children: [
             {
-               
+
                 index: true,
                 element: <Merchantmanagement />,
             },
             {
-                path:'merchantEdit/:merchantId',
+                path: 'merchantEdit/:merchantId',
                 element: <EditView />,
             },
             {
-                path:'merchantView/:merchantId',
+                path: 'merchantView/:merchantId',
                 element: <EditView />,
             },
             {
@@ -64,11 +66,11 @@ export const router = createBrowserRouter([
                 element: <PostManagement />,
             },
             {
-                path:'postEdit/:postId',
+                path: 'postEdit/:postId',
                 element: <PostEditView />,
             },
             {
-                path:'postView/:postId',
+                path: 'postView/:postId',
                 element: <PostEditView />,
             },
             {
@@ -94,3 +96,5 @@ export const router = createBrowserRouter([
         ],
     }
 ]);
+
+

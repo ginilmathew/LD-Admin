@@ -13,15 +13,20 @@ import CustomTextArea from '../common/CustomTextArea';
 import CustomSwitch from '../common/CustomSwitch';
 import CustomButton from '../common/CustomButton';
 import CustomBackArrow from '../common/CustomBackArrow';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import { getPostListShow } from '../../api/post';
+import { useQuery } from '@tanstack/react-query';
 
 
 export const PostEditView = ({ close, open, label }) => {
 
     const location = useLocation();
     const { state } = location;
+    const { postId } = useParams();
 
+    const { data, isError, isLoading, isFetched, refetch } = useQuery({ queryKey: ['postshow'], queryFn: () => getPostListShow(postId) });
 
+    console.log({data})
 
     const [companyLogoPreview, setcompanyLogoPreview] = useState(null);
     const [imagefileCmpny, setImagefileCmpny] = useState(null);

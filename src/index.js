@@ -5,11 +5,25 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './Router';
+import UserProvider from './Context/user/userContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SnackbarProvider } from './hooks/SnackBarHook';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: 3, retryDelay: 1000 } }
+})
+
 root.render(
   <React.StrictMode>
-     <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+      <SnackbarProvider>
+        <RouterProvider router={router} />
+        </SnackbarProvider>
+      </UserProvider>
+    </QueryClientProvider>
+
   </React.StrictMode>
 );
 

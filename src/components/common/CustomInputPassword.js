@@ -66,7 +66,7 @@ const CustomInputPassword = ({
                     control={control}
                     render={({ field: { value, onChange, onBlur } }) => (
                         <TextField
-                            type={type}
+                            type={textType ? textType : type}
                             defaultValue={defaultValue}
                             value={cust_value ? cust_value : value}
 

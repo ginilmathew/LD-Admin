@@ -3,7 +3,7 @@ import React from 'react';
 import { COLOURS } from '../../assets/COLORS';
 import CutomSearch from './CustomSearch';
 
-const CustomHeading = ({ label,isEnable }) => {
+const CustomHeading = ({ label, isEnable, setState }) => {
     return (
         <Grid container mt={8} spacing={2} justifyContent="space-between" alignItems="center">
 
@@ -19,9 +19,9 @@ const CustomHeading = ({ label,isEnable }) => {
             </Grid>
             {!isEnable && <Grid item xs={12} sm={12} xl={2} lg={2} md={2}>
                 <Box display="flex" justifyContent="flex-end">
-                    <CutomSearch />
-                </Box> 
-            </Grid> }
+                    <CutomSearch setState={setState} />
+                </Box>
+            </Grid>}
         </Grid>
     );
 };

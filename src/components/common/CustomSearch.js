@@ -11,6 +11,7 @@ const CutomSearch = ({ setState, placeholder, mutateFilter, dateF, setlist, Fetc
 
     const onchangeValue = (e) => {
         const { value } = e.target;
+        setState(value)
     }
     return (
         <>

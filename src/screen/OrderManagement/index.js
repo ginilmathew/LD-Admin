@@ -1,16 +1,34 @@
 import { Box, Stack, Tooltip } from '@mui/material'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import CustomHeading from '../../components/common/CustomHeading'
 import DataTable from '../../components/common/CustomTable';
 import useModal from '../../hooks/ModalHook';
 import View from '../../components/OrderMangement/View';
 import { ICONS } from '../../assets/ICONS';
 import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from '../../hooks/SnackBarHook';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getOrderList } from '../../api/order';
 
 const OrderManagement = () => {
-  const { modal, openModal, closeModal } = useModal();
+
 
   const navigate = useNavigate()
+  const showSnackbar = useSnackbar();
+  const queryClient = useQueryClient();
+  const [List, setlist] = useState([]);
+
+  const { data, isError, isLoading, isFetched, refetch } = useQuery({ queryKey: ['orderList'], queryFn: getOrderList });
+
+
+
+
+  useEffect(() => {
+    if (data?.data?.data) {
+
+      setlist(data?.data?.data)
+    }
+  }, [data?.data?.data])
   const columns = [
     {
       field: 'id',
@@ -104,15 +122,6 @@ const OrderManagement = () => {
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
   ];
 
-  const openView = useCallback((id) => {
-
-    openModal('viewModal');
-  }, [modal]);
-
-
-  const closeView = useCallback(() => {
-    closeModal('viewModal');
-  }, [modal]);
 
 
   const navigateToview = useCallback(() => {
@@ -126,7 +135,7 @@ const OrderManagement = () => {
     <Box px={5} py={2}>
       <CustomHeading label={'Order Management'} />
       <Box mt={7}>
-        <DataTable id={'id'} columns={columns} rows={rows} />
+        <DataTable id={'id'} columns={columns} rows={List} />
       </Box>
       {/* {modal.viewModal && <View open={modal.viewModal} close={closeView} label={'View Order'} hide={true} />} */}
     </Box>

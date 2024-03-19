@@ -1,5 +1,5 @@
 import { Box, Container, Divider, Grid, MenuItem, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomModal from '../common/CustomModal'
 import CustomTitle from '../common/CustomTitle'
 import { useForm } from "react-hook-form";
@@ -13,11 +13,18 @@ import CustomTextArea from '../common/CustomTextArea';
 import CustomSwitch from '../common/CustomSwitch';
 import CustomButton from '../common/CustomButton';
 import CustomBackArrow from '../common/CustomBackArrow';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import { getMerchantShow } from '../../api/Merchant';
+import { useQuery } from '@tanstack/react-query';
 
 export const EditView = () => {
     const location = useLocation();
+    const { merchantId } = useParams();
     const { state } = location;
+
+    const { data, isError, isLoading, isFetched, refetch } = useQuery({ queryKey: ['merchantshow'], queryFn: () => getMerchantShow(merchantId) });
+
+
 
     const [companyLogoPreview, setcompanyLogoPreview] = useState(null);
     const [imagefileCmpny, setImagefileCmpny] = useState(null);
@@ -33,11 +40,21 @@ export const EditView = () => {
         control,
         setValue,
         setError,
+        reset,
         formState: { errors }
     } = useForm({
         resolver: yupResolver(schema),
 
     });
+
+
+
+    useEffect(()=>{
+        if(data?.data?.data){
+            reset(data?.data?.data)
+        }
+    },[data?.data?.data]);
+
 
     const ImageUploderCompany = () => {
 
@@ -63,68 +80,65 @@ export const EditView = () => {
                 <Grid container spacing={2} my={2} >
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomInput
-
-                            readonly={false}
+                           
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.user_name}
+                            fieldName="user_name"
                             fieldLabel="Username"
                         />
                     </Grid>
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomInput
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.email}
+                            fieldName="email"
                             fieldLabel="Email Address"
                         />
                     </Grid>
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomInput
-
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.mobile}
+                            fieldName="mobile"
                             fieldLabel="Mobile Number"
                         />
                     </Grid>
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomInput
-
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.first_name}
+                            fieldName="first_name"
                             fieldLabel="First Name"
                         />
                     </Grid>
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomInput
-
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.last_name}
+                            fieldName="last_name"
                             fieldLabel="Last Name"
                         />
                     </Grid>
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomInput
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.dob}
+                            fieldName="dob"
                             fieldLabel="DOB"
                         />
                     </Grid>
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomInput
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.designation}
+                            fieldName="designation"
                             fieldLabel="Designation"
                         />
                     </Grid>
@@ -135,28 +149,28 @@ export const EditView = () => {
                 <Grid container spacing={2} my={2} >
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomInput
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.company_name}
+                            fieldName="company_name"
                             fieldLabel="Business Name"
                         />
                     </Grid>
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomInput
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.established_date}
+                            fieldName="established_date"
                             fieldLabel="Established Date"
                         />
                     </Grid>
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomInput
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.representative_name}
+                            fieldName="representative_name"
                             fieldLabel="Company Representative"
                         />
                     </Grid>
@@ -212,35 +226,35 @@ export const EditView = () => {
                 <Grid container spacing={4} my={2} >
                     <Grid item xl={4} lg={4} md={4} sm={6} xs={12}>
                         <CustomInput
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.facebook_link}
+                            fieldName="facebook_link"
                             fieldLabel="Facebook"
                         />
                     </Grid>
                     <Grid item xl={4} lg={4} md={4} sm={6} xs={12}>
                         <CustomInput
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.tiktok_link}
+                            fieldName="tiktok_link"
                             fieldLabel="Tiktok"
                         />
                     </Grid>
                     <Grid item xl={4} lg={4} md={4} sm={6} xs={12}></Grid>
                     <Grid item xl={4} lg={4} md={4} sm={6} xs={12}>
                         <CustomInput
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.instagram_link}
+                            fieldName="instagram_link"
                             fieldLabel="Instagram"
                         />
                     </Grid>
                     <Grid item xl={4} lg={4} md={4} sm={6} xs={12}>
                         <CustomInput
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
                             error={errors.name}
                             fieldName="name"
@@ -250,11 +264,10 @@ export const EditView = () => {
                     <Grid item xl={4} lg={4} md={4} sm={6} xs={12}></Grid>
                     <Grid item xl={4} lg={4} md={4} sm={6} xs={12}>
                         <CustomInput
-
-                            readonly={false}
+                            readonly={state === 'view' ? false : true}
                             control={control}
-                            error={errors.name}
-                            fieldName="name"
+                            error={errors.linkedin_link}
+                            fieldName="linkedin_link"
                             fieldLabel="LinkedIN"
                         />
                     </Grid>
@@ -266,9 +279,10 @@ export const EditView = () => {
                 <Grid container spacing={3} my={2} >
                     <Grid item xl={2.4} lg={2.4} md={3} sm={4} xs={12}>
                         <CustomSelect
+
                             control={control}
-                            error={errors.payment_method}
-                            fieldName="Approval Status"
+                            error={errors.approval_status}
+                            fieldName="approval_status"
                             fieldLabel="Approval Status"
                             size="16px"
                             value={''}
@@ -286,6 +300,7 @@ export const EditView = () => {
                     </Grid>
                     <Grid item xl={3} lg={3} md={3} sm={4} xs={12}>
                         <CustomTextArea
+                            
                             readOnly={true}
                             control={control}
                             error={errors.product_description}
@@ -315,14 +330,11 @@ export const EditView = () => {
                             onClick={(e) => ChangeStatus(e.target.checked)}
                         />
                     </Grid>
-
-
-
                 </Grid>
+                {state === 'edit' &&
                 <Box display={'flex'} justifyContent={'center'} py={5}>
                     <CustomButton isIcon={false} label={'Update'} width={{ xl: '30%', lg: '30%', md: '30%', sm: '60%', xs: '100%' }} />
-
-                </Box>
+                </Box>}
 
             </Box>
 
