@@ -1,5 +1,5 @@
 import { Box, Stack, Tooltip } from '@mui/material'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { startTransition, useCallback, useEffect, useState } from 'react'
 import CustomHeading from '../../components/common/CustomHeading'
 import DataTable from '../../components/common/CustomTable';
 import useModal from '../../hooks/ModalHook';
@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from '../../hooks/SnackBarHook';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getOrderList } from '../../api/order';
+import moment from 'moment';
+import CustomBackDrop from '../../components/common/CustomBackDrop';
 
 const OrderManagement = () => {
 
@@ -43,6 +45,7 @@ const OrderManagement = () => {
       flex: 1,
       headerAlign: 'center',
       align: 'center',
+      valueGetter: (params) => params.row.payment?.post_id,
     },
 
 
@@ -52,6 +55,7 @@ const OrderManagement = () => {
       flex: 1,
       headerAlign: 'center',
       align: 'center',
+      valueGetter: (params) => params.row.user?.id,
     },
     {
       field: 'age',
@@ -59,6 +63,7 @@ const OrderManagement = () => {
       flex: 1,
       headerAlign: 'center',
       align: 'center',
+      valueGetter: (params) => params.row.user?.first_name,
     },
     {
       field: 'fullName',
@@ -66,8 +71,7 @@ const OrderManagement = () => {
       flex: 1,
       headerAlign: 'center',
       align: 'center',
-      valueGetter: (params) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+      valueGetter: (params) => (moment(params.row.payment?.payment_details?.created).format('DD/MM/YYYY')),
     },
     {
       field: 'agesdf',
@@ -76,6 +80,7 @@ const OrderManagement = () => {
       flex: 1,
       headerAlign: 'center',
       align: 'center',
+      valueGetter: (params) => params.row.payment?.payment_details?.transactionId,
     },
 
     {
@@ -85,6 +90,7 @@ const OrderManagement = () => {
       flex: 1,
       headerAlign: 'center',
       align: 'center',
+      valueGetter: (params) => params.row.payment?.payment_status,
     },
 
     {
@@ -100,7 +106,7 @@ const OrderManagement = () => {
         <Stack alignItems={'center'} gap={1} direction={'row'}>
           <Tooltip title={'view'}>
             <ICONS.RemoveRedEyeIcon.component
-              onClick={navigateToview}
+              onClick={() => navigateToview(row.id)}
               sx={ICONS.RemoveRedEyeIcon.sx}
             />
           </Tooltip>
@@ -110,30 +116,41 @@ const OrderManagement = () => {
     }
   ];
 
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 14 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 31 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 11 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
 
 
 
-  const navigateToview = useCallback(() => {
-    navigate('/order/:orderId')
-  }, [])
+  const navigateToview = useCallback((id) => {
+    navigate(`/order/${id}`)
+  }, [navigate])
+
+  const searchItem = useCallback((value) => {
+    console.log({ value })
+    let result = data?.data?.data?.filter((com) => com?.id.toString().toLowerCase().includes(value.toLowerCase())
+      || com?.user?.first_name.toString().toLowerCase().includes(value.toLowerCase()) ||
+      com?.user?.id.toString().toLowerCase().includes(value.toLowerCase()) || com?.payment?.post_id.toString().toLowerCase().includes(value.toLowerCase())
+
+    )
+    startTransition(() => {
+      setlist(result)
+    })
+  }, [List])
 
 
-
+  if (isLoading) {
+    return (
+      <Box px={5} py={2}>
+        <CustomHeading label={'Order Management'} />
+        <Box mt={7}>
+          <DataTable id={'id'} columns={columns} rows={[]} />
+        </Box>
+        <CustomBackDrop loading={isLoading} />
+      </Box>
+    )
+  }
 
   return (
     <Box px={5} py={2}>
-      <CustomHeading label={'Order Management'} />
+      <CustomHeading label={'Order Management'} setState={searchItem} />
       <Box mt={7}>
         <DataTable id={'id'} columns={columns} rows={List} />
       </Box>

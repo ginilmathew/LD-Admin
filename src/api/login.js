@@ -11,3 +11,13 @@ export const PostLogin = async (data) => {
     }
 
 }
+export const forgetPassword = async (data) => {
+
+    try {
+        const response = await axiosInstance.post('/forgotpassword', data);
+        return response
+    } catch (error) {
+        throw error
+    }
+
+}

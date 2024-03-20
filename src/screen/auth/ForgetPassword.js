@@ -14,6 +14,9 @@ import LoginBackground from '../../components/login/LoginBackground';
 import LoginLogo from '../../components/login/LoginLogo';
 import { ICONS } from '../../assets/ICONS';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { useSnackbar } from '../../hooks/SnackBarHook';
+import { forgetPassword } from '../../api/login';
 
 
 
@@ -21,10 +24,21 @@ import { useNavigate } from 'react-router-dom';
 const ForgetPassword = () => {
 
     const navigate = useNavigate();
+    const showSnackbar = useSnackbar();
 
+    const { mutate, isLoading, error } = useMutation({
+        mutationFn: forgetPassword,
+        onSuccess: async (data) => {
+            showSnackbar('Sent succesfully', 'success');
+            navigate('/login')
+        },
+        onError: (error, variables, context) => {
+            showSnackbar(error?.message, 'error');
+        },
+    })
 
     const schema = object().shape({
-
+        email: yup.string().email().required('Email is required'),
     });
 
     const {
@@ -42,6 +56,9 @@ const ForgetPassword = () => {
     const isMdScreen = useMediaQuery(theme.breakpoints.up('md'));
 
 
+    const SubmitForm = (data) => {
+        mutate(data)
+    }
     const NavigationGoBack = useCallback(() => {
         navigate('/login')
     }, [])
@@ -67,11 +84,11 @@ const ForgetPassword = () => {
                             <LoginLogo />
                         </Grid>
                         <Grid item xl={12} xs={12}  >
-                            <Typography sx={{ fontSize: 30, fontFamily:'Outfit-Bold'}}>Forgot Password</Typography>
+                            <Typography sx={{ fontSize: 30, fontFamily: 'Outfit-Bold' }}>Forgot Password</Typography>
                         </Grid>
                         <Grid item xl={12} xs={12} sx={{ display: 'flex', justifyContent: 'center' }} >
                             <Box width={'70%'}>
-                                <Typography sx={{ fontSize: 22,fontFamily:'Outfit-Regular' }}>Enter your registered email address.</Typography>
+                                <Typography sx={{ fontSize: 22, fontFamily: 'Outfit-Regular' }}>Enter your registered email address.</Typography>
                             </Box>
 
                         </Grid>
@@ -87,6 +104,7 @@ const ForgetPassword = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <CustomButton
+                                onClick={handleSubmit(SubmitForm)}
                                 width={'100%'}
                                 label={'Confirm'}
                                 isIcon={false} />
@@ -98,7 +116,7 @@ const ForgetPassword = () => {
                         <Grid item xs={12}>
                             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, cursor: 'pointer' }} onClick={NavigationGoBack}>
                                 <ICONS.arrowBack.component sx={ICONS.arrowBack.sx} />
-                                <Typography sx={{ fontSize: 26, fontFamily:'Outfit-Medium', color: COLOURS.secondary }}>GO BACK</Typography>
+                                <Typography sx={{ fontSize: 26, fontFamily: 'Outfit-Medium', color: COLOURS.secondary }}>GO BACK</Typography>
                             </Box>
 
                         </Grid>

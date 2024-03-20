@@ -24,7 +24,6 @@ const Merchantmanagement = () => {
 
 
 
-
   useEffect(() => {
     if (data?.data?.data) {
 
@@ -57,7 +56,7 @@ const Merchantmanagement = () => {
       color = 'blue';
     } else if (orderStatus === 'completed') {
       color = 'green';
-    } else if (orderStatus === 'rejected') {
+    } else if (orderStatus === 'reject') {
       color = '#af1616';
     } else if (orderStatus === 'pending') {
       color = "#af7c16"
@@ -173,7 +172,7 @@ const Merchantmanagement = () => {
               sx={ICONS.RemoveRedEyeIcon.sx}
             />
           </Tooltip>
-
+     
           <Tooltip title={'edit'}>
             <ICONS.BorderColorIcon.component
               onClick={() => navigateToEdit(row?.id)}

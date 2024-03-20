@@ -31,3 +31,13 @@ export const getMerchantShow = async (id) => {
         throw error;
     }
 }
+
+export const updateMerchant = async (data) => {
+    try {
+        const response = await axiosInstance.post(`admin/merchant-update`,data);
+        return response
+    }
+    catch (error) {
+        throw error;
+    }
+}

@@ -16,12 +16,12 @@ const ReportCard = ({ heading, titleL, countL, titleR, countR, onClick, active }
             </Box>
             <Box display={'flex'} justifyContent={'space-between'}>
                 <Box display={'flex'} flexDirection={'column'} justifyContent={'flex-start'} gap={1} textAlign={'center'}>
-                    <Typography sx={{ fontSize: 14, fontFamily: 'Outfit-Regular' }}>{titleL}</Typography>
-                    <Typography sx={{ fontSize: 18, fontFamily: 'Outfit-Medium', color: COLOURS.textColor }}>{countL}</Typography>
+                    <Typography sx={{ fontSize: 12, fontFamily: 'Outfit-Regular' }}>{titleL}</Typography>
+                    <Typography sx={{ fontSize: 14, fontFamily: 'Outfit-Medium', color: COLOURS.textColor }}>{countL}</Typography>
                 </Box>
                 <Box display={'flex'} flexDirection={'column'} gap={1} textAlign={'center'}>
-                    <Typography sx={{ fontSize: 14, fontFamily: 'Outfit-Regular' }}>{titleR}</Typography>
-                    <Typography sx={{ fontSize: 18, fontFamily: 'Outfit-Medium', color: COLOURS.textColor }}>{countR}</Typography>
+                    <Typography sx={{ fontSize: 12, fontFamily: 'Outfit-Regular' }}>{titleR}</Typography>
+                    <Typography sx={{ fontSize: 14, fontFamily: 'Outfit-Medium', color: COLOURS.textColor }}>{countR}</Typography>
                 </Box>
             </Box>
         </Card>

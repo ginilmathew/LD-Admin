@@ -19,3 +19,13 @@ export const getPostListShow = async (id) => {
         throw error;
     }
 }
+export const updatePost = async (data) => {
+    try {
+        const response = await axiosInstance.post(`admin/post-status-update`,data);
+        return response
+    }
+    catch (error) {
+        throw error;
+    }
+}
+

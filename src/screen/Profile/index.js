@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CustomBackArrow from '../../components/common/CustomBackArrow';
 import { Box, Grid, Typography } from '@mui/material';
 import CustomInput from '../../components/common/CustomInput';
@@ -14,11 +14,12 @@ import { IMG_URL } from '../../config';
 import { useSnackbar } from '../../hooks/SnackBarHook';
 import * as Yup from 'yup';
 import CustomBackDrop from '../../components/common/CustomBackDrop';
+import UserContext from '../../Context/user';
 
 const ProfileScreen = () => {
     const showSnackbar = useSnackbar();
     const queryClient = useQueryClient();
-
+    const { user,setUser } = useContext(UserContext);
     const [imagePreview, setImagePreview] = useState(null);
     const [imagefile, setImagefile] = useState(null);
     const [currentButton, setCurrentButton] = useState('');
@@ -28,8 +29,12 @@ const ProfileScreen = () => {
         queryFn: getProfile,
     });
 
+    
+
+
     useEffect(() => {
         if (data?.data?.data) {
+            setUser(data?.data?.data);
             setValue('first_name', data?.data?.data?.first_name);
             setValue('email', data?.data?.data?.email);
             setValue('mobile', data?.data?.data?.mobile ? data?.data?.data?.mobile : null);
@@ -40,6 +45,7 @@ const ProfileScreen = () => {
     const { mutate: mutateProfile, isLoading: profileisLoading, error } = useMutation({
         mutationFn: UpdateProfile,
         onSuccess: async (data) => {
+            setUser(data?.data?.data);
             await queryClient.invalidateQueries({ queryKey: ['profile'] });
             showSnackbar('Update successfully', 'success');
         },

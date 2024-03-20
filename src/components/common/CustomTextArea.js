@@ -8,6 +8,7 @@ const CustomTextArea = ({
   fieldLabel,
   placeholder,
   error,
+  readOnly
 
 }) => {
 
@@ -17,7 +18,7 @@ const CustomTextArea = ({
     <>
       <FormGroup>
         <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-          <Typography fontFamily={'Raleway, sans-serif'} fontWeight={'700'} px={'3px'} mb={'2px'}
+          <Typography fontFamily={'Outfit-Medium'}  px={'3px'} mb={'2px'}
             sx={{
               fontSize: {
                 lg: 16,
@@ -36,6 +37,7 @@ const CustomTextArea = ({
           control={control}
           render={({ field: { value, onChange, onBlur } }) => (
             <textarea
+            readOnly={readOnly}
               rows="6"
               onChange={onChange}
               value={value}

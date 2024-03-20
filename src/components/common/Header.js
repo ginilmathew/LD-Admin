@@ -17,13 +17,16 @@ import { COLOURS } from '../../assets/COLORS';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import UserContext from '../../Context/user';
+import { IMG_URL } from '../../config';
 
 const Header = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { setUser } = useContext(UserContext);
+  const { user,setUser } = useContext(UserContext);
+  console.log({user})
+
 
   const handleIconButtonClick = () => {
     setIsDrawerOpen(true);
@@ -107,7 +110,7 @@ const Header = () => {
             <Hidden mdDown>
               <Tooltip title="Click here">
                 <IconButton onClick={handleIconButton} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" />
+                  <Avatar alt="Remy Sharp"  src={IMG_URL + user?.image}/>
                 </IconButton>
               </Tooltip>
             </Hidden>
@@ -134,7 +137,7 @@ const Header = () => {
               <MenuItem sx={{ background: COLOURS.menuItemBox }}>
                 <Box display={'flex'} justifyContent={'space-between'} gap={5} alignItems={'center'} width={150}>
                   <Typography sx={{ fontSize: 12, letterSpacing: 0.79, color: COLOURS.menuText, fontFamily: 'Outfit-Light' }}>{'Admin'}</Typography>
-                  <Typography sx={{ fontSize: 16, color: COLOURS.textColor, fontFamily: 'Outfit-Medium' }}>{'Ginil'}</Typography>
+                  <Typography sx={{ fontSize: 16, color: COLOURS.textColor, fontFamily: 'Outfit-Medium' }}>{user?.first_name}</Typography>
                 </Box>
               </MenuItem>
               <MenuItem sx={{ background: COLOURS.menuItemBox, fontSize: 16, fontFamily: 'Outfit-Medium', letterSpacing: 0.79 }} onClick={NavigateToProfile}>
