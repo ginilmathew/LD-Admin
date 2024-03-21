@@ -205,7 +205,7 @@ export const PostEditView = ({ close, open, label }) => {
                             previewEditimage={""}
                             type={"file"}
                             background="#e7f5f7"
-                            myid="contained-button-file"
+                            myid="contained-button-file2"
                             width={'100%'}
                         />
                     </Grid>
@@ -226,7 +226,7 @@ export const PostEditView = ({ close, open, label }) => {
                             previewEditimage={""}
                             type={"file"}
                             background="#e7f5f7"
-                            myid="contained-button-file"
+                            myid="contained-button-file1"
                             width={'100%'}
                         />
                     </Grid>

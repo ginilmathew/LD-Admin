@@ -82,21 +82,21 @@ const Merchantmanagement = () => {
     {
       field: 'id',
       headerName: 'Merchant ID',
-      width: 200,
+      width: 130,
       headerAlign: 'center',
       align: 'center',
     },
     {
       field: 'first_name',
       headerName: 'First name',
-      width: 200,
+      width: 180,
       headerAlign: 'center',
       align: 'center',
     },
     {
       field: 'Created Date',
       headerName: 'Created Date',
-      width: 200,
+      width: 180,
       valueGetter: (params) => (moment(params.row.created_at).format('DD/MM/YYYY')),
       headerAlign: 'center',
       align: 'center',
@@ -123,7 +123,7 @@ const Merchantmanagement = () => {
       field: 'mobile',
       headerName: 'Mobile Number',
       type: 'number',
-      width: 200,
+      width: 150,
       headerAlign: 'center',
       align: 'center',
     },
@@ -140,7 +140,7 @@ const Merchantmanagement = () => {
       field: 'agesdfsdsd',
       headerName: 'Status',
       type: 'number',
-      width: 250,
+      width: 180,
       headerAlign: 'center',
       align: 'center',
       renderCell: ({ row }) => (
@@ -156,7 +156,7 @@ const Merchantmanagement = () => {
 
       field: 'Action',
       headerName: 'Action',
-      flex: 1,
+      width: 200,
       headerAlign: 'center',
       align: 'center',
 
@@ -165,7 +165,7 @@ const Merchantmanagement = () => {
       disableColumnMenu: true,
 
       renderCell: ({ row }) => (
-        <Stack alignItems={'center'} gap={1} direction={'row'}>
+        <Stack alignItems={'center'} gap={2} direction={'row'}>
           <Tooltip title={'view'}>
             <ICONS.RemoveRedEyeIcon.component
               onClick={() => navigateToView(row?.id)}

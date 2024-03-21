@@ -113,9 +113,6 @@ const ProfileScreen = () => {
 
     const submitPassword = (data) => {
         mutateProfilePassword(data)
-
-        // Submit password update
-        // Implement your password update logic here
     };
 
     const imageUploder = (file) => {

@@ -291,7 +291,7 @@ export const EditView = () => {
                             previewEditimage={""}
                             type={"file"}
                             background="#e7f5f7"
-                            myid="contained-button-file"
+                            myid="contained-button-file1"
                             width={'100%'}
                         />
 
@@ -315,7 +315,7 @@ export const EditView = () => {
                             previewEditimage={""}
                             type={"file"}
                             background="#e7f5f7"
-                            myid="contained-button-file"
+                            myid="contained-button-file2"
                             width={'100%'}
                         />
                     </Grid>

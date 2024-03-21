@@ -21,7 +21,7 @@ const ReportsMangement = () => {
   })
 
 
-console.log(data?.data?.list?.totoal_customer)
+
 
   useEffect(() => {
     if (data?.data) {
@@ -31,7 +31,7 @@ console.log(data?.data?.list?.totoal_customer)
         postReport: data?.data?.postReport
       })
     }
-  }, [data?.data?.data])
+  }, [data?.data])
 
   const columnsPost = [
     {

@@ -127,12 +127,12 @@ const PostManagement = () => {
               sx={ICONS.RemoveRedEyeIcon.sx}
             />
           </Tooltip>
-          {(!row?.status === 'approved' || !row?.status === 'rejected') &&
+        
           <Tooltip title={'edit'}>
             <ICONS.BorderColorIcon.component
               onClick={() => navigateToEdit(row?.id)}
               sx={ICONS.BorderColorIcon.sx} />
-          </Tooltip> }
+          </Tooltip> 
         </Stack>
       ),
     }

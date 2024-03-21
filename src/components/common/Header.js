@@ -25,7 +25,7 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { user,setUser } = useContext(UserContext);
-  console.log({user})
+
 
 
   const handleIconButtonClick = () => {
